@@ -19,7 +19,7 @@ class QueryHandler():
     
         relationshipFoodCarbohydrateByIDReadModel = ReadModels.GetRelationshipFoodCarbohydrateByIDReadModel(relationshipFoodCarbohydrateByID.IdIngrediente,
                                                                                                             relationshipFoodCarbohydrateByID.IdHidratoDeCarbono,
-                                                                                                            relationshipFoodCarbohydrateByID.CantidadHidratoDeCarbonoEnIngrediente,
+                                                                                                            float(relationshipFoodCarbohydrateByID.CantidadHidratoDeCarbonoEnIngrediente),
                                                                                                             relationshipFoodCarbohydrateByID.PorCada,
                                                                                                             relationshipFoodCarbohydrateByID.UnidadMedidaHidratoDeCarbonoEnIngrediente)
         
@@ -36,6 +36,6 @@ class QueryHandler():
         
         for carbohydrate in carbohydratesInFood:
             tmpCarbohydrate = ReadModels.GetRelationshipFoodCarbohydrateByIDReadModel(carbohydrate.IdIngrediente,carbohydrate.IdHidratoDeCarbono,carbohydrate.CantidadHidratoDeCarbonoEnIngrediente,carbohydrate.PorCada,carbohydrate.UnidadMedidaHidratoDeCarbonoEnIngrediente)
-            carbohydratesInFood.append(tmpCarbohydrate)
+            carbohydratesInFoodList.append(tmpCarbohydrate)
         
         return carbohydratesInFoodList
