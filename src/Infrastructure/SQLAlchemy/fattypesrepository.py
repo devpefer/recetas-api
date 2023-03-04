@@ -1,8 +1,6 @@
-from decimal import Decimal
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import exists
-from src.Application.FatTypes.Commands.commands import Commands
 from src.Domain.FatTypes.fattype import FatType
 from src.Infrastructure.SQLAlchemy import secrets
 

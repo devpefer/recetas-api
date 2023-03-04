@@ -1,6 +1,5 @@
 from src.Domain.Relationship_Food_Carbohydrates.relationship_food_carbohydrate import RelationshipFoodCarbohydrate
 
-
 class ReadModels():
     class GetRelationshipFoodCarbohydrateByIDReadModel():
         def __init__(self, idIngrediente, idHidratoDeCarbono, cantidadHidratoDeCarbonoEnIngrediente, porCada, unidadMedidaHidratoDeCarbonoEnIngrediente):
