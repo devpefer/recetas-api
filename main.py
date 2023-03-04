@@ -12,6 +12,7 @@ from src.API.Controllers.FatTypesController.fattypescontroller import FatTypesCo
 from src.API.Controllers.FoodController.foodcontroller import FoodController
 from src.API.Controllers.MineralsController.mineralscontroller import MineralsController
 from src.API.Controllers.RelationshipFoodCarbohydrate.relationshipfoodcarbohydratecontroller import RelationshipFoodCarbohydrateController
+from src.API.Controllers.RelationshipFoodVitamin.relationshipfoodvitamincontroller import RelationshipFoodVitaminController
 from src.API.Controllers.VitaminsController.vitaminscontroller import VitaminsController
 
 app = FastAPI()
@@ -24,6 +25,7 @@ app.include_router(FatTypesController.router)
 app.include_router(FoodController.router)
 app.include_router(MineralsController.router)
 app.include_router(RelationshipFoodCarbohydrateController.router)
+app.include_router(RelationshipFoodVitaminController.router)
 app.include_router(VitaminsController.router)
 app.add_middleware(CORSMiddleware,
                    allow_origins=["*"],
