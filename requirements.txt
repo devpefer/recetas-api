@@ -1,0 +1,6 @@
+pycurl
+certifi
+xmltodict
+uvicorn
+fastapi
+mediatr
