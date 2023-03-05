@@ -2,23 +2,24 @@ from http import HTTPStatus
 from fastapi import APIRouter, HTTPException, Response
 from src.exceptions import ObjectAlreadyExists, ObjectNotExists
 from src.API.Controllers.Shared.requesthandler import RequestHandler
-from src.Application.FatSubtypes.Queries.querymodels import QueryModels
-from src.Application.FatSubtypes.Commands.commands import Commands
+from src.Application.Vitamins.Queries.querymodels import QueryModels
+from src.Application.Vitamins.Commands.commands import Commands
 
-class FatSubtypesController():
+class VitaminsController():
+    
     router = APIRouter(
-        prefix="/FatSubtypes",
-        tags=["Fat Subtypes"],
+        prefix="/Vitamins",
+        tags=["Vitamins"],
     )
 
     #region GET
     
-    @router.get("/GetFatSubtypeByID/{fatSubtypeID}")
-    async def GetFatSubtypeByID(fatSubtypeID: int):
+    @router.get("/GetVitaminByID/{mineralID}")
+    async def GetVitaminByID(vitaminID: int):
         requestHandler = RequestHandler()
         
         try:
-            return requestHandler.HandleQuery(QueryModels.GetFatSubtypeByIDQueryModel(fatSubtypeID))
+            return requestHandler.HandleQuery(QueryModels.GetVitaminByIDQueryModel(vitaminID))
         
         except ObjectNotExists as ex:
             raise HTTPException(HTTPStatus.NOT_FOUND, detail=ex.args[0])
@@ -26,12 +27,12 @@ class FatSubtypesController():
         except Exception as ex:
             raise HTTPException(HTTPStatus.INTERNAL_SERVER_ERROR, detail=ex.args[0])
         
-    @router.get("/GetAllFatSubtypes")
-    async def GetAllFatSubtypes():
+    @router.get("/GetAllVitamins")
+    async def GetAllVitamins():
         requestHandler = RequestHandler()
         
         try:
-            return requestHandler.HandleQuery(QueryModels.GetAllFatSubtypesQueryModel())
+            return requestHandler.HandleQuery(QueryModels.GetAllVitaminsQueryModel())
         
         except ObjectNotExists as ex:
             raise HTTPException(HTTPStatus.NOT_FOUND, detail=ex.args[0])
@@ -43,12 +44,12 @@ class FatSubtypesController():
 
     #region POST
     
-    @router.post("/InsertFatSubtype")
-    async def InsertFatSubtype(insertFatSubtypeCommand: Commands.InsertFatSubtypeCommand):
+    @router.post("/InsertVitamin")
+    async def InsertVitamin(insertVitaminCommand: Commands.InsertVitaminCommand):
         requestHandler = RequestHandler()
     
         try:
-            requestHandler.HandleQuery(insertFatSubtypeCommand)
+            requestHandler.HandleCommand(insertVitaminCommand)
             return Response('',HTTPStatus.OK)
         
         except ObjectAlreadyExists as ex:
@@ -61,12 +62,12 @@ class FatSubtypesController():
 
     #region DELETE
     
-    @router.delete("/Delete/{fatSubtypeID}")
-    async def Delete(fatSubtypeID):
+    @router.delete("/Delete/{vitaminID}")
+    async def Delete(vitaminID):
         requestHandler = RequestHandler()
     
         try:
-            requestHandler.HandleCommand(Commands.DeleteFatSubtypeCommand(fatSubtypeID))
+            requestHandler.HandleCommand(Commands.DeleteVitaminCommand(vitaminID))
             return Response('',HTTPStatus.OK)
         
         except ObjectNotExists as ex:

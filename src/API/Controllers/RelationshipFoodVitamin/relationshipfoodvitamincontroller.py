@@ -1,24 +1,24 @@
-from http import HTTPStatus
 from fastapi import APIRouter, HTTPException, Response
-from src.exceptions import ObjectAlreadyExists, ObjectNotExists
+from http import HTTPStatus
+from src.exceptions import ObjectNotExists, ObjectAlreadyExists
 from src.API.Controllers.Shared.requesthandler import RequestHandler
-from src.Application.FatSubtypes.Queries.querymodels import QueryModels
-from src.Application.FatSubtypes.Commands.commands import Commands
+from src.Application.Relationship_Food_Vitamins.Commands.commands import Commands
+from src.Application.Relationship_Food_Vitamins.Queries.querymodels import QueryModels
 
-class FatSubtypesController():
+class RelationshipFoodVitaminController():
     router = APIRouter(
-        prefix="/FatSubtypes",
-        tags=["Fat Subtypes"],
+        prefix="/RelationshipFoodVitamins",
+        tags=["Relationship Food Vitamins"],
     )
 
     #region GET
     
-    @router.get("/GetFatSubtypeByID/{fatSubtypeID}")
-    async def GetFatSubtypeByID(fatSubtypeID: int):
+    @router.get("/GetRelationshipFoodVitaminByID/{foodID}/{vitaminID}")
+    async def GetRelationshipFoodVitaminByID(foodID: int, vitaminID: int):
         requestHandler = RequestHandler()
         
         try:
-            return requestHandler.HandleQuery(QueryModels.GetFatSubtypeByIDQueryModel(fatSubtypeID))
+            return requestHandler.HandleQuery(QueryModels.GetRelationshipFoodVitaminByIDQueryModel(foodID,vitaminID))
         
         except ObjectNotExists as ex:
             raise HTTPException(HTTPStatus.NOT_FOUND, detail=ex.args[0])
@@ -26,29 +26,29 @@ class FatSubtypesController():
         except Exception as ex:
             raise HTTPException(HTTPStatus.INTERNAL_SERVER_ERROR, detail=ex.args[0])
         
-    @router.get("/GetAllFatSubtypes")
-    async def GetAllFatSubtypes():
+    @router.get("/GetAllVitaminsInFood/{foodID}")
+    async def GetAllVitaminsInFood(foodID: int):
         requestHandler = RequestHandler()
         
         try:
-            return requestHandler.HandleQuery(QueryModels.GetAllFatSubtypesQueryModel())
+            return requestHandler.HandleQuery(QueryModels.GetAllVitaminsInFoodQueryModel(foodID))
         
         except ObjectNotExists as ex:
             raise HTTPException(HTTPStatus.NOT_FOUND, detail=ex.args[0])
         
         except Exception as ex:
-            raise HTTPException(HTTPStatus.INTERNAL_SERVER_ERROR, detail=ex.args[0])
-        
+            raise HTTPException(HTTPStatus.INTERNAL_SERVER_ERROR, detail=ex.args[0])    
+            
     #endregion
-
+    
     #region POST
     
-    @router.post("/InsertFatSubtype")
-    async def InsertFatSubtype(insertFatSubtypeCommand: Commands.InsertFatSubtypeCommand):
+    @router.post("/InsertRelationshipFoodVitamin")
+    async def InsertRelationshipFoodVitamin(insertRelationshipFoodVitaminCommand: Commands.InsertRelationshipFoodVitaminCommand):
         requestHandler = RequestHandler()
-    
+
         try:
-            requestHandler.HandleQuery(insertFatSubtypeCommand)
+            requestHandler.HandleCommand(insertRelationshipFoodVitaminCommand)
             return Response('',HTTPStatus.OK)
         
         except ObjectAlreadyExists as ex:
@@ -58,15 +58,15 @@ class FatSubtypesController():
             raise HTTPException(HTTPStatus.INTERNAL_SERVER_ERROR, detail=ex.args[0])
         
     #endregion
-
+    
     #region DELETE
     
-    @router.delete("/Delete/{fatSubtypeID}")
-    async def Delete(fatSubtypeID):
+    @router.delete("/DeleteRelationshipFoodVitamin/{foodID}/{vitaminID}")
+    async def DeletetRelationshipFoodVitamin(foodID: int, vitaminID: int):
         requestHandler = RequestHandler()
-    
+
         try:
-            requestHandler.HandleCommand(Commands.DeleteFatSubtypeCommand(fatSubtypeID))
+            requestHandler.HandleCommand(Commands.DeleteRelationshipFoodVitaminCommand(foodID,vitaminID))
             return Response('',HTTPStatus.OK)
         
         except ObjectNotExists as ex:

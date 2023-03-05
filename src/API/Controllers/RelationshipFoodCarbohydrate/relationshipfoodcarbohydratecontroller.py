@@ -52,7 +52,7 @@ class RelationshipFoodCarbohydrateController():
             return Response('',HTTPStatus.OK)
         
         except ObjectAlreadyExists as ex:
-            raise HTTPException(HTTPStatus.FORBIDDEN, detail=ex.args[0])
+            raise HTTPException(HTTPStatus.CONFLICT, detail=ex.args[0])
         
         except Exception as ex:
             raise HTTPException(HTTPStatus.INTERNAL_SERVER_ERROR, detail=ex.args[0])

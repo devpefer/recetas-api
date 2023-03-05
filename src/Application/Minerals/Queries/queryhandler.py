@@ -1,4 +1,3 @@
-import os
 from src.exceptions import ObjectNotExists
 from src.Application.Minerals.Queries.querymodels import QueryModels
 from src.Domain.Minerals.mineral import Mineral

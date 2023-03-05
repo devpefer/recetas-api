@@ -1,4 +1,3 @@
-from src.Application.Minerals.Commands.commands import Commands
 from src.Infrastructure.SQLAlchemy.base import Base
 from sqlalchemy import Column, String, Integer
 

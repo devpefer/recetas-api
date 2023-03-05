@@ -1,4 +1,3 @@
-import os
 from src.exceptions import ObjectNotExists
 from src.Application.Relationship_Food_Carbohydrates.Queries.querymodels import QueryModels
 from src.Domain.Relationship_Food_Carbohydrates.relationship_food_carbohydrate import RelationshipFoodCarbohydrate
@@ -15,14 +14,16 @@ class QueryHandler():
         if not relationshipFoodCarbohydrateRepository.Exists(request.FoodID,request.CarbohydrateID):
             raise ObjectNotExists(f'RelationshipFoodCarbohydrate {request.FoodID} {request.CarbohydrateID} not exists')
         
-        relationshipFoodCarbohydrateByID: RelationshipFoodCarbohydrate = relationshipFoodCarbohydrateRepository.GetRelationshipFoodCarbohydrateByID(request.FoodID, request.CarbohydrateID)
+        relationshipFoodCarbohydrateByID: RelationshipFoodCarbohydrate = relationshipFoodCarbohydrateRepository.GetRelationshipFoodCarbohydrateByID(
+            request.FoodID,
+            request.CarbohydrateID)
     
-        relationshipFoodCarbohydrateByIDReadModel = ReadModels.GetRelationshipFoodCarbohydrateByIDReadModel(relationshipFoodCarbohydrateByID.IdIngrediente,
-                                                                                                            relationshipFoodCarbohydrateByID.IdHidratoDeCarbono,
-                                                                                                            relationshipFoodCarbohydrateByID.CantidadHidratoDeCarbonoEnIngrediente,
-                                                                                                            relationshipFoodCarbohydrateByID.PorCada,
-                                                                                                            relationshipFoodCarbohydrateByID.UnidadMedidaHidratoDeCarbonoEnIngrediente)
-        
+        relationshipFoodCarbohydrateByIDReadModel = ReadModels.GetRelationshipFoodCarbohydrateByIDReadModel(
+            relationshipFoodCarbohydrateByID.IdIngrediente,
+            relationshipFoodCarbohydrateByID.IdHidratoDeCarbono,
+            float(relationshipFoodCarbohydrateByID.CantidadHidratoDeCarbonoEnIngrediente),
+            relationshipFoodCarbohydrateByID.PorCada,
+            relationshipFoodCarbohydrateByID.UnidadMedidaHidratoDeCarbonoEnIngrediente)
         
         return relationshipFoodCarbohydrateByIDReadModel
     
@@ -30,12 +31,18 @@ class QueryHandler():
     def GetAllCarbohydratesInFood(request: QueryModels.GetAllCarbohydratesInFoodQueryModel) -> ReadModels.GetAllCarbohydratesInFoodReadModel:
         relationshipFoodCarbohydrateRepository = RelationshipFoodCarbohydrateRepository()
         
-        carbohydratesInFood: list[RelationshipFoodCarbohydrate] = relationshipFoodCarbohydrateRepository.GetAllCarbohydratesInFood(request.FoodID)
+        carbohydratesInFood: list[RelationshipFoodCarbohydrate] = relationshipFoodCarbohydrateRepository.GetAllCarbohydratesInFood(
+            request.FoodID)
         
         carbohydratesInFoodList: list[ReadModels.GetRelationshipFoodCarbohydrateByIDReadModel] = []
         
         for carbohydrate in carbohydratesInFood:
-            tmpCarbohydrate = ReadModels.GetRelationshipFoodCarbohydrateByIDReadModel(carbohydrate.IdIngrediente,carbohydrate.IdHidratoDeCarbono,carbohydrate.CantidadHidratoDeCarbonoEnIngrediente,carbohydrate.PorCada,carbohydrate.UnidadMedidaHidratoDeCarbonoEnIngrediente)
-            carbohydratesInFood.append(tmpCarbohydrate)
+            tmpCarbohydrate = ReadModels.GetRelationshipFoodCarbohydrateByIDReadModel(
+                carbohydrate.IdIngrediente,carbohydrate.IdHidratoDeCarbono,
+                carbohydrate.CantidadHidratoDeCarbonoEnIngrediente,
+                carbohydrate.PorCada,
+                carbohydrate.UnidadMedidaHidratoDeCarbonoEnIngrediente)
+            
+            carbohydratesInFoodList.append(tmpCarbohydrate)
         
         return carbohydratesInFoodList

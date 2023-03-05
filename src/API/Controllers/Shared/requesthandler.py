@@ -12,6 +12,10 @@ from src.Application.Minerals.Queries.queryhandler import QueryHandler
 from src.Application.Minerals.Commands.commandhandler import CommandHandler
 from src.Application.Relationship_Food_Carbohydrates.Queries.queryhandler import QueryHandler
 from src.Application.Relationship_Food_Carbohydrates.Commands.commandhandler import CommandHandler
+from src.Application.Relationship_Food_Vitamins.Queries.queryhandler import QueryHandler
+from src.Application.Relationship_Food_Vitamins.Commands.commandhandler import CommandHandler
+from src.Application.Vitamins.Queries.queryhandler import QueryHandler
+from src.Application.Vitamins.Commands.commandhandler import CommandHandler
 from mediatr import Mediator
 import json
 

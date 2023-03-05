@@ -4,7 +4,6 @@ from src.exceptions import ObjectAlreadyExists, ObjectNotExists
 from src.API.Controllers.Shared.requesthandler import RequestHandler
 from src.Application.Fats.Queries.querymodels import QueryModels
 from src.Application.Fats.Commands.commands import Commands
-import json
 
 class FatsController():
     router = APIRouter(
@@ -21,10 +20,10 @@ class FatsController():
             return requestHandler.HandleQuery(QueryModels.GetFatByIDQueryModel(fatID))
         
         except ObjectNotExists as ex:
-            raise HTTPException(HTTPStatus.INTERNAL_SERVER_ERROR, detail=ex.args[0])
+            raise HTTPException(HTTPStatus.NOT_FOUND, detail=ex.args[0])
         
         except Exception as ex:
-            raise HTTPException(500, detail=ex.args[0])
+            raise HTTPException(HTTPStatus.INTERNAL_SERVER_ERROR, detail=ex.args[0])
         
     @router.get("/GetAllFats/{fatID}")
     async def GetAllFats():
@@ -34,10 +33,10 @@ class FatsController():
             return requestHandler.HandleQuery(QueryModels.GetAllFatsQueryModel())
         
         except ObjectNotExists as ex:
-            raise HTTPException(HTTPStatus.INTERNAL_SERVER_ERROR, detail=ex.args[0])
+            raise HTTPException(HTTPStatus.NOT_FOUND, detail=ex.args[0])
         
         except Exception as ex:
-            raise HTTPException(500, detail=ex.args[0])
+            raise HTTPException(HTTPStatus.INTERNAL_SERVER_ERROR, detail=ex.args[0])
         
     #endregion
 
@@ -52,7 +51,7 @@ class FatsController():
             return Response('',HTTPStatus.OK)
         
         except ObjectAlreadyExists as ex:
-            raise HTTPException(HTTPStatus.FORBIDDEN, detail=ex.args[0])
+            raise HTTPException(HTTPStatus.CONFLICT, detail=ex.args[0])
         
         except Exception as ex:
             raise HTTPException(HTTPStatus.INTERNAL_SERVER_ERROR, detail=ex.args[0])
